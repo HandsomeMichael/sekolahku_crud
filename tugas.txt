@@ -1,0 +1,22 @@
+1. Buatlah kelompok dengan anggota maksimal 3 orang!
+2. Ubahlah tampilan Website Sekolah yang sudah dibuat sebelumnya
+ dengan menambahkan Menu Mata Pelajaran dan Ekstrakurikuler di 
+File Index.php dengan tambahan tabel :
+
+ 	- tabel mata pelajaran :
+		id int autoincrement primary key,
+		nama_mapel varchar (50),
+		kelas varchar (10),
+		guru_pengajar varchar (100) 
+
+	- tabel ekstrakurikuler
+		id int autoincrement primary key,
+		nama_ekstra varchar (50),
+		jadwal varchar (20),
+		guru_ekstra varchar (100) 
+
+3. Tambahkan menu login untuk masuk ke dalam website dan logout.
+4. Kriteria penilaian website yang dibuat :
+	Fungsionalitas  : 70 %
+	Tampilan	: 20 %
+	Presentasi Web	: 10 %
