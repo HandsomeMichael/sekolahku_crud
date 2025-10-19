@@ -9,7 +9,7 @@ include "koneksi.php";
 
 // Verify reCAPTCHA
 
-$logpage = "indexbaru.php";
+$logpage = "index.php";
 
 // Captcha Key, klo bisa pindah ke DB
 $secret_key = "6Lf8ZewrAAAAANiJAos8XLq_oOWFsY-CqfCRyONN";
