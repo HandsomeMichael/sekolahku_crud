@@ -1,81 +1,77 @@
+
+<!-- PHP -->
 <?php
-// YOUR reCAPTCHA KEYS - REPLACE THESE!
+
+// Captcha Key, klo bisa pindah ke DB
 $site_key = "6Lf8ZewrAAAAAO5sWOwxkXW7_Dp3tLm0auSyj_W9";
-$secret_key = "6Lf8ZewrAAAAANiJAos8XLq_oOWFsY-CqfCRyONN";
 
-$show_form = true;
-$message = "";
+// Kalau udah login, langsung ke dashboard
+session_start();
 
-// Check if form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verify reCAPTCHA
-    $recaptcha_response = $_POST['g-recaptcha-response'];
-    
-    $verify_url = "https://www.google.com/recaptcha/api/siteverify";
-    $data = [
-        'secret' => $secret_key,
-        'response' => $recaptcha_response
-    ];
-    
-    $options = [
-        'http' => [
-            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method' => 'POST',
-            'content' => http_build_query($data)
-        ]
-    ];
-    
-    $context = stream_context_create($options);
-    $result = file_get_contents($verify_url, false, $context);
-    $result_json = json_decode($result, true);
-    
-    // Check if reCAPTCHA was successful
-    if ($result_json['success']) {
-        // reCAPTCHA PASSED - Process your form here
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        
-        // Do whatever you want with the form data
-        // Send email, save to database, etc.
-        
-        $message = "<div style='color: green;'>Success! Form submitted. (Hello, $name!)</div>";
-        $show_form = false; // Hide form after success
-    } else {
-        // reCAPTCHA FAILED
-        $message = "<div style='color: red;'>Please complete the reCAPTCHA!</div>";
-    }
+// Gak aman kntl
+if(isset($_SESSION['nama']) && isset($_SESSION['level']) && isset($_SESSION['id']))
+{
+    header("Location: dashboard.php");
 }
+
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Simple reCAPTCHA Form</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MySchool DB</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 <body>
-    <h2>Contact Form</h2>
-    
-    <?php echo $message; ?>
-    
-    <?php if ($show_form): ?>
-    <form method="POST" action="">
-        <p>
-            <label>Name:</label><br>
-            <input type="text" name="name" required>
-        </p>
-        
-        <p>
-            <label>Email:</label><br>
-            <input type="email" name="email" required>
-        </p>
-        
-        <!-- reCAPTCHA Widget -->
-        <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
-        <br>
-        
-        <input type="submit" value="Submit">
-    </form>
-    <?php endif; ?>
+    <main>
+        <!-- Ini loginnya -->
+        <section>
+
+            <!-- Kalimat intro -->
+            <h1>Halo, Selamat Datang</h1>
+            <p>Silahkan masukkan data login mu</p>
+
+            <!-- Formnya, mungkin di wrap pake div lagi -->
+             <!-- Klo gagal login gr gr captcha, pake logincap.php -->
+            <form action="login.php" method="post">
+
+                <!-- Nama user -->
+                <p>
+                    <label>Nama:</label><br>
+                    <input type="text" name="nama" required>
+                </p>
+
+                <!-- Password , klo bisa tambahin button show / hide password nya -->
+                <p>
+                    <label>Password:</label><br>
+                    <input type="password" name="password" required>
+                    <button type="button" onclick="">Show</button>
+                </p>
+                
+                <!-- Captcha nya -->
+                <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
+                <br>
+
+                <!-- Backend nya ada di login.php -->
+                <button type="submit">Masuk</button>
+
+                <div>
+                    <p>Belum punya akun? <a href="register.php">Daftar disini</a></p>
+                </div>
+                <!-- <input type="submit" value="Submit"> -->
+
+            </form>
+        </section>
+
+        <!-- Ini imagenya -->
+        <section>
+
+        </section>
+    </main>
 </body>
 </html>

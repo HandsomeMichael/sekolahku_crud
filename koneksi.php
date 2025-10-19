@@ -9,9 +9,9 @@
     $nama_db = "db_sekolah";
     
     // actually connect
-    $mysqli = mysqli_connect($host,$user,$pass,$nama_db);
+    $koneksi = mysqli_connect($host,$user,$pass,$nama_db);
 
-    if(!$mysqli)
+    if(!$koneksi)
     { 
         die ("koneksi database gagal: ".mysqli_connect_error());
     }
