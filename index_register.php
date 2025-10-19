@@ -1,21 +1,4 @@
 
-<!-- PHP -->
-<?php
-
-// Captcha Key, klo bisa pindah ke DB
-$site_key = "6Lf8ZewrAAAAAO5sWOwxkXW7_Dp3tLm0auSyj_W9";
-
-// Kalau udah login, langsung ke dashboard
-session_start();
-
-// Gak aman kntl
-if(isset($_SESSION['nama']) && isset($_SESSION['level']) && isset($_SESSION['id']))
-{
-    header("Location: dashboard.php");
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -49,7 +32,7 @@ if(isset($_SESSION['nama']) && isset($_SESSION['level']) && isset($_SESSION['id'
 
             <!-- Formnya, mungkin di wrap pake div lagi -->
              <!-- Klo gagal login gr gr captcha, pake logincap.php -->
-            <form action="login.php" method="post">
+            <form action="register.php" method="post">
 
                 <!-- Nama user -->
                 <p>
@@ -63,17 +46,21 @@ if(isset($_SESSION['nama']) && isset($_SESSION['level']) && isset($_SESSION['id'
                     <input type="password" name="password" required>
                     <button type="button" onclick="">Show</button>
                 </p>
+
+                <p>
+                    <label>Confirm Password:</label><br>
+                    <input type="password" name="confirm_password" required>
+                    <button type="button" onclick="">Show</button>
+                </p>
                 
                 <!-- Captcha nya -->
                 <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
                 <br>
 
                 <!-- Backend nya ada di login.php -->
-                <button type="submit">Masuk</button>
+                <button type="submit">Daftar</button>
 
-                <div>
-                    <p>Belum punya akun? <a href="register.php">Daftar disini</a></p>
-                </div>
+                <button>Balik ke Login</button>
                 <!-- <input type="submit" value="Submit"> -->
 
             </form>
