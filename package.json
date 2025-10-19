@@ -1,0 +1,14 @@
+{
+
+  "scripts": 
+  {
+    "lomban":"bunx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch",
+    "dev":"npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch",
+    "zebra": "npx tailwindcss -i ./input.css -o ./output.css --watch"
+  },
+  
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.14",
+    "tailwindcss": "^4.1.14"
+  }
+}
