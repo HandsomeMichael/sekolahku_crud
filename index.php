@@ -38,8 +38,8 @@ if(isset($_SESSION['nama']) && isset($_SESSION['level']) && isset($_SESSION['id'
             <div class="flex flex-col gap-20">
                 <h1 class="flex gap-2.5"><img class=" max-w-[24px]" src="asset/logo.png" alt="">MySchool DB</h1>
                 <div class=" border-l-[5px] border-[#3159BB] pl-5">
-                    <h1 class="text-[56px] font-semibold leading-12">Halo, <br>
-                        Selamat Datang</h1>
+                    <h1 class="relative text-[56px] font-semibold leading-12">Halo, <br>
+                        Selamat Datang  <img class="absolute top-12 right-[108px]" src="asset/decoration.png" alt=""></h1>
                     <p class="text-[#7288BA] text-2xl font-medium">Silahkan masukkan data login mu</p>
                 </div>
             </div>
