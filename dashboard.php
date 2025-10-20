@@ -6,8 +6,14 @@ include "koneksi.php";
 $tabel_siswa = mysqli_query($koneksi, "SELECT * FROM siswa");
 $jumlah_siswa = mysqli_num_rows($tabel_siswa);
 
+$jumlah_guru = mysqli_num_rows($mysqli_query($koneksi, "SELECT * FROM guru"));
+$jumlah_mapel = mysqli_num_rows($mysqli_query($koneksi, "SELECT * FROM mapel"));
+$jumlah_ekstra = mysqli_num_rows($mysqli_query($koneksi, "SELECT * FROM ekstra"));
+
 $tabel_jurusan = mysqli_query($koneksi, "SELECT * FROM jurusan");
 $jumlah_jurusan = mysqli_num_rows($tabel_jurusan);
+
+$akses_manajemen = $_SESSION["level"] == "operator";
 
 
 // sql katuk jek
@@ -42,6 +48,18 @@ while ($row = $result->fetch_assoc())
     ];
 }
 
+// <?php
+//                         $counter = 1;
+//                         foreach($topJurusan as $row) {
+//                             echo "<div>";
+//                             echo "<p>" . $counter . "<p>";
+//                             echo "<p>" . htmlspecialchars($row['jurusan']) . "</p>";
+//                             echo "<p>" . $row['total_siswa'] . "</p>";
+//                             echo "<p>" . $row['persentase'] . "%</p>";
+//                             echo "</div>";
+//                             $counter++;
+//                         }
+//                         ?>
 
 
 ?>
@@ -58,7 +76,7 @@ while ($row = $result->fetch_assoc())
 </head>
 <body>
     <!-- jadiin flex , tapi terserah khe mau body nya dijadiin flex langsung ato gimana dah-->
-    <main>
+    <main class="flex">
         
         <!-- sidebarnya -->
         <nav>
@@ -69,18 +87,42 @@ while ($row = $result->fetch_assoc())
             </div>
             
             <div class="menu">
+                <p>MENU</p>
 
+                <!-- INI DI HIGHLIGHTIN -->
+                <div>
+                    <p>Dashboard</p>
+                </div>
+
+                <div>
+                    <p>Guru</p>
+                </div>
+
+                <div>
+                    <p>Mapel</p>
+                </div>
+
+                <div>
+                    <p>Jurusan</p>
+                </div>
+
+                <div>
+                    <p>Ekstra</p>
+                </div>
             </div>
 
             <div class="general">
 
+                <p>GENERAL</p>
+                <?php if ($akses_manajemen): ?>
+                    <div>
+                        <p>Administrasi</p>
+                    </div>
+                <?php endif; ?>
+
                 <div class="">
-                    <a href="logout.php">Logout</a>
+                    <a href="logout.php">Log Out</a>
                 </div>
-
-            </div>
-
-            <div class="akun">
 
             </div>
         </nav>
@@ -98,30 +140,60 @@ while ($row = $result->fetch_assoc())
             <section>
                 <!-- gak tau khe mau pake grid atau flexbox, aku taruh je php nya sni -->
 
-                <div>
-                    <p>Siswa</p>
-                    <h1><?php echo $jumlah_siswa; ?></h1>
-                    <p><a href="icon"></a>blablablablaba</p>
-                </div>
+                <a href="siswa/index.php">
+                    <div>
+                        <p>Siswa</p>
+                        <h1><?php echo $jumlah_siswa; ?></h1>
+                        <p><img src="" alt="">blablablablaba</p>
+                    </div>
+                </a>
+
+                <a href="guru/index.php">
+                    <div>
+                        <p>Guru</p>
+                        <h1><?php echo $jumlah_guru; ?></h1>
+                        <p><img src="" alt="">blablabla</p>
+                    </div>
+                </a>
+
+                <a href="mapel/index.php">
+                    <div>
+                        <p>Mapel</p>
+                        <h1><?php echo $jumlah_mapel; ?></h1>
+                        <p><img src="" alt="">blablabla</p>
+                    </div>
+                </a>
+
+                <a href="jurusan/index.php">
+                    <div>
+                        <p>Total Jurusan</p>
+                        <div>
+                            <h1><?php echo $jumlah_mapel; ?></h1>
+                            <p>blabablablabl</p>
+                        </div>
+                    </div>
+                </a>
+
 
                 <div>
-                    <p>Populasi Jurusan</p>
-                    <?php
-                        $counter = 1;
-                        foreach($topJurusan as $row) {
-                            echo "<div>";
-                            echo "<p>" . $counter . "<p>";
-                            echo "<p>" . htmlspecialchars($row['jurusan']) . "</p>";
-                            echo "<p>" . $row['total_siswa'] . "</p>";
-                            echo "<p>" . $row['persentase'] . "%</p>";
-                            echo "</div>";
-                            $counter++;
-                        }
-                        ?>
-                    <div>
-                        
-                    </div>
+                    <p>Top Populasi Jurusan</p>
+
+                    <!-- serah khe gimana, bikin bikin aja dlu. tapi setidaknya responsif dikit soalnya data nya mungkin cuma 1 atau 2 -->
                 </div>
+
+                <!-- klo ada manajemen -->
+                <?php if ($akses_manajemen): ?>
+                    <div>
+
+                    </div>
+                    <div>
+
+                    </div>
+                <?php endif; ?>
+
+                <!-- klo gak ada manajemen -->
+                <?php if (!$akses_manajemen): ?>
+                <?php endif; ?>
 
             </section>
         </section>
