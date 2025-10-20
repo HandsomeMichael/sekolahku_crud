@@ -43,7 +43,7 @@ if(isset($_SESSION['nama']) && isset($_SESSION['level']) && isset($_SESSION['id'
                         <p class="text-[#7288BA] text-2xl font-medium">Silahkan masukkan data login mu</p>
                     </div>
                 </div>
-            <form class="bg-white text-[#162955] p-8 pr-[68px] max-w-fit mt-10 rounded-xl flex flex-col gap-20" action="login.php"   method="post">
+            <form class="bg-white text-[#162955] p-8 pr-[68px] max-w-fit mt-10 rounded-xl flex flex-col gap-20" action="register.php"   method="post">
                 <div class="flex flex-col gap-6 ">
                     <div class="flex flex-col gap-2">
                         <h1 class="flex gap-2"><img class="max-w-6" src="asset/username.png" alt="">Username</h1>
@@ -56,11 +56,21 @@ if(isset($_SESSION['nama']) && isset($_SESSION['level']) && isset($_SESSION['id'
                             <button class="p-3 border border-[#162955] rounded-[10px] " type="button" onclick=""><img class="max-w-8" src="asset/View.png" alt=""></button>
                         </div>
                     </div>
+                    <div class="flex flex-col gap-2">
+                        <h1 class="flex gap-2"><img class="max-w-6" src="asset/password.png" alt=""> Konfirmasi Password:</h1>
+                        <div class="flex gap-1.5">
+                            <input class="w-[400px] text-[#152855]/50 p-3 border border-[#162955] rounded-[10px]" type="password" name="password_confirm" placeholder="*Password user" required>
+                            <button class="p-3 border border-[#162955] rounded-[10px] " type="button" onclick=""><img class="max-w-8" src="asset/View.png" alt=""></button>
+                        </div>
+                    </div>
                     <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
                 </div>
                 <div class="flex flex-col gap-7">
-                <button class="py-3 px-24 bg-[#3059BB] rounded-xl font-bold text-white" type="submit">Masuk</button>
-                    <h1 class="flex items-center gap-4 text-[#162955] font-semibold text-xl">Tidak punya akun? <a class="text-lg underline text-[#3059BB] font-normal" href="register.php">Daftar sebagai Tamu</a></h1>
+                    <button class="py-3 px-24 bg-[#3059BB] rounded-xl font-bold text-white" type="submit">Masuk</button>
+
+                    <!-- ni balik ke index.php nya ya ko, ku gak ngerti pake button -->
+                    <a href="index.php"></a>
+                    <!-- <h1 class="flex items-center gap-4 text-[#162955] font-semibold text-xl">Tidak punya akun? <a class="text-lg underline text-[#3059BB] font-normal" href="register.php">Daftar sebagai Tamu</a></h1> -->
                 </div>
             </form>
         </div>  

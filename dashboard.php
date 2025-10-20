@@ -9,26 +9,40 @@ $jumlah_siswa = mysqli_num_rows($tabel_siswa);
 $tabel_jurusan = mysqli_query($koneksi, "SELECT * FROM jurusan");
 $jumlah_jurusan = mysqli_num_rows($tabel_jurusan);
 
-// $jumlah_siswa_per_jurusan = array();
 
-// if($jumlah_jurusan > 1 && $jumlah_siswa > 1)
-// {
+// sql katuk jek
+$sql = "
+SELECT 
+    j.nama_jurusan AS jurusan,
+    COUNT(s.id) AS total_siswa,
+    ROUND(
+        (COUNT(s.id) / NULLIF((SELECT COUNT(*) FROM siswa), 0) * 100),
+        2
+    ) AS persentase
+FROM jurusan j
+LEFT JOIN siswa s ON s.jurusan = j.nama_jurusan
+GROUP BY j.nama_jurusan
+ORDER BY total_siswa DESC
+LIMIT 4;
+";
 
-//     $data_jurusan = mysqli_fetch_array($tabel_jurusan);
+$result = $koneksi->query($sql);
 
-//     for ($i=0; $i < min($jumlah_jurusan,6); $i++) 
-//     {
-//         $data_jurusan[$i];
-//         # code...
-//     }
-//     while($data_jurusan = mysqli_fetch_array($tabel_jurusan))
-//     {
-//         $nama_jurusan = $data_jurusan['nama'];
-//         $tabel_siswa_per_jurusan = mysqli_query($koneksi, "SELECT * FROM siswa WHERE jurusan='$nama_jurusan'");
-//         $jumlah_siswa_per_jurusan[$nama_jurusan] = mysqli_num_rows($tabel_siswa_per_jurusan);
-//         $persen_siswa_per_jurusan[$nama_jurusan] = ($jumlah_siswa > 0) ? round(($jumlah_siswa_per_jurusan[$nama_jurusan] / $jumlah_siswa) * 100) : 0;
-//     }
-// }
+$topJurusan = [];
+while ($row = $result->fetch_assoc()) 
+{
+    // kalau persentase NULL, ubah ke 0
+    $persentase = $row['persentase'] ?? 0;
+    if ($persentase === null) $persentase = 0;
+
+    $topJurusan[] = [
+        'jurusan' => $row['jurusan'],
+        'total_siswa' => (int)$row['total_siswa'],
+        'persentase' => (float)$persentase
+    ];
+}
+
+
 
 ?>
 
@@ -43,22 +57,43 @@ $jumlah_jurusan = mysqli_num_rows($tabel_jurusan);
 
 </head>
 <body>
-
-    <!-- jadiin flex -->
+    <!-- jadiin flex , tapi terserah khe mau body nya dijadiin flex langsung ato gimana dah-->
     <main>
-
+        
         <!-- sidebarnya -->
         <nav>
-            <a href="logout.php">Logout</a>
             <!-- Males ngisi -->
+
+            <div class="logolagi"> 
+
+            </div>
+            
+            <div class="menu">
+
+            </div>
+
+            <div class="general">
+
+                <div class="">
+                    <a href="logout.php">Logout</a>
+                </div>
+
+            </div>
+
+            <div class="akun">
+
+            </div>
         </nav>
 
         <!-- Konten nya -->
         <section>
+            
             <!-- Hero-->
             <section>
-
+                <div><h1>Dashboard</h1> <p>database</p></div>
+                <p>Lorem ipsum dolor sit amet conesrfdsdfsfdafsadf</p>
             </section>
+
             <!-- Konten -->
             <section>
                 <!-- gak tau khe mau pake grid atau flexbox, aku taruh je php nya sni -->
@@ -71,6 +106,18 @@ $jumlah_jurusan = mysqli_num_rows($tabel_jurusan);
 
                 <div>
                     <p>Populasi Jurusan</p>
+                    <?php
+                        $counter = 1;
+                        foreach($topJurusan as $row) {
+                            echo "<div>";
+                            echo "<p>" . $counter . "<p>";
+                            echo "<p>" . htmlspecialchars($row['jurusan']) . "</p>";
+                            echo "<p>" . $row['total_siswa'] . "</p>";
+                            echo "<p>" . $row['persentase'] . "%</p>";
+                            echo "</div>";
+                            $counter++;
+                        }
+                        ?>
                     <div>
                         
                     </div>
