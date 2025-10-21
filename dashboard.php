@@ -6,9 +6,9 @@ include "koneksi.php";
 $tabel_siswa = mysqli_query($koneksi, "SELECT * FROM siswa");
 $jumlah_siswa = mysqli_num_rows($tabel_siswa);
 
-$jumlah_guru = mysqli_num_rows($mysqli_query($koneksi, "SELECT * FROM guru"));
-$jumlah_mapel = mysqli_num_rows($mysqli_query($koneksi, "SELECT * FROM mapel"));
-$jumlah_ekstra = mysqli_num_rows($mysqli_query($koneksi, "SELECT * FROM ekstra"));
+$jumlah_guru = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM guru"));
+$jumlah_mapel = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM mapel"));
+$jumlah_ekstra = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM ekstra"));
 
 $tabel_jurusan = mysqli_query($koneksi, "SELECT * FROM jurusan");
 $jumlah_jurusan = mysqli_num_rows($tabel_jurusan);
@@ -59,10 +59,11 @@ while ($row = $result->fetch_assoc())
 //                             echo "</div>";
 //                             $counter++;
 //                         }
-//                         ?>
-
+//                         
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -70,74 +71,101 @@ while ($row = $result->fetch_assoc())
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="src/output.css">
     <title>MySchool DB</title>
 
 </head>
 <body>
+
+    <!-- Background Image -->
+    <div class="-z-20 absolute w-[100%] h-[100%] bg-[url(../asset/mammot.png)] bg-cover"></div>
+
     <!-- jadiin flex , tapi terserah khe mau body nya dijadiin flex langsung ato gimana dah-->
-    <main class="flex">
+    <main class="flex p-7 gap-5">
         
         <!-- sidebarnya -->
         <nav>
-            <!-- Males ngisi -->
 
-            <div class="logolagi"> 
-
-            </div>
+            <div class="logolagi"> </div>
             
             <div class="menu">
+
                 <p>MENU</p>
 
                 <!-- INI DI HIGHLIGHTIN -->
-                <div>
+                <a href="">
+                    <div class="selector"></div>
+                    <!-- icon -->
+                    <img src="" alt="">
                     <p>Dashboard</p>
-                </div>
+                </a>
 
-                <div>
+                <!-- YG LAINNYA KAGAK -->
+                <a href="">
+                    <div class="selector"></div>
+                    <!-- icon -->
+                    <img src="" alt="">
+                    <p>Siswa</p>
+                </a>
+                <a href="">
+                    <div class="selector"></div>
+                    <!-- icon -->
+                    <img src="" alt="">
                     <p>Guru</p>
-                </div>
-
-                <div>
+                </a>
+                <a href="">
+                    <div class="selector"></div>
+                    <!-- icon -->
+                    <img src="" alt="">
                     <p>Mapel</p>
-                </div>
-
-                <div>
+                </a>
+                <a href="">
+                    <div class="selector"></div>
+                    <!-- icon -->
+                    <img src="" alt="">
                     <p>Jurusan</p>
-                </div>
-
-                <div>
+                </a>
+                <a href="">
+                    <div class="selector"></div>
+                    <!-- icon -->
+                    <img src="" alt="">
                     <p>Ekstra</p>
-                </div>
+                </a>
             </div>
 
             <div class="general">
 
                 <p>GENERAL</p>
                 <?php if ($akses_manajemen): ?>
-                    <div>
+                    <a href="">
+                        <div class="selector"></div>
+                        <!-- icon -->
+                        <img src="" alt="">
                         <p>Administrasi</p>
-                    </div>
+                    </a>
                 <?php endif; ?>
 
-                <div class="">
-                    <a href="logout.php">Log Out</a>
-                </div>
+                <a href="logout.php">
+                    <div class="selector"></div>
+                    <!-- icon -->
+                    <img src="" alt="">
+                    <p>Log Out</p>
+                </a>
 
             </div>
         </nav>
 
         <!-- Konten nya -->
-        <section>
+        <div>
             
             <!-- Hero-->
-            <section>
+            <div>
                 <div><h1>Dashboard</h1> <p>database</p></div>
                 <p>Lorem ipsum dolor sit amet conesrfdsdfsfdafsadf</p>
-            </section>
+            </div>
 
             <!-- Konten -->
-            <section>
+            <div>
                 <!-- gak tau khe mau pake grid atau flexbox, aku taruh je php nya sni -->
 
                 <a href="siswa/index.php">
@@ -184,19 +212,50 @@ while ($row = $result->fetch_assoc())
                 <!-- klo ada manajemen -->
                 <?php if ($akses_manajemen): ?>
                     <div>
-
+                        <div>
+                            <h1><?php echo $jumlah_ekstra; ?></h1>
+                            <div class="dividor"></div>
+                            <div>
+                                <h1>Ekstrakulikuler</h1>
+                                <p>Komunitas / Grup</p>
+                            </div>
+                        </div>
+                        <a href="ekstra/index.php">
+                            Lihat
+                            <img src="" alt="">
+                        </a>
                     </div>
-                    <div>
 
-                    </div>
+                    <a href="admin/index.php">
+                        <img src="" alt="">
+                        <p>Manajemen Pengguna</p>
+                        <img src="" alt="">
+                    </a>
+
                 <?php endif; ?>
 
                 <!-- klo gak ada manajemen -->
                 <?php if (!$akses_manajemen): ?>
+                    <div>
+                        <div>
+                            <h1><?php echo $jumlah_ekstra; ?></h1>
+                            <div class="dividor"></div>
+                            <div>
+                                <h1>Ekstrakulikuler</h1>
+                                <p>Komunitas / Grup</p>
+                            </div>
+                        </div>
+                        <a href="ekstra/index.php">
+                            Lihat
+                            <img src="" alt="">
+                        </a>
+                    </div>
                 <?php endif; ?>
 
-            </section>
-        </section>
+            </div>
+        </div>
+
     </main>
+
 </body>
 </html>

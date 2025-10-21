@@ -32,7 +32,20 @@ if(isset($_SESSION['nama']) && isset($_SESSION['level']) && isset($_SESSION['id'
 </head>
 <body class="overflow-hidden ">
 
-    <section class="p-20 flex justify-around bg-gradient-to-b from-[#162955] to-[#3059bb] text-white">
+    <script>
+        function togglePasswordVisibility(input_id) 
+        {
+            const passwordInput = document.getElementById(input_id);
+            const button = document.getElementById(input_id + '_img');
+
+            button.setAttribute('src', button.getAttribute('src') === 'asset/View.png' ? 'asset/Hide.png' : 'asset/View.png');
+
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+        }
+    </script>
+
+    <section class="p-20 flex justify-around bg-gradient-to-b from-[50%] from-[#162955] to-[100%] to-[#3059bb] text-white">
         <img class="z-10 absolute bottom-0 left-0" src="asset/background.png" alt="">
         <div class=" z-20">
             <div class="flex flex-col gap-20">
@@ -46,16 +59,17 @@ if(isset($_SESSION['nama']) && isset($_SESSION['level']) && isset($_SESSION['id'
         <form class="bg-white text-[#162955] p-8 pr-[68px] max-w-fit mt-10 rounded-xl flex flex-col gap-20" action="login.php"   method="post">
             <div class="flex flex-col gap-6 ">
                 <div class="flex flex-col gap-2">
-                    <h1 class="flex gap-2"><img class="max-w-6" src="asset/username.png" alt="">Username</h1>
+                    <h1 class="flex gap-2"><img class="max-w-6" src="asset/username.png" alt="👤">Username</h1>
                     <input class="text-[#152855]/50 p-3 border border-[#162955] rounded-[10px]" type="text" name="nama" placeholder="*Nama user" required>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <h1 class="flex gap-2"><img class="max-w-6" src="asset/password.png" alt=""> Password:</h1>
+                    <h1 class="flex gap-2"><img class="max-w-6" src="asset/password.png" alt="🔑"> Password:</h1>
                     <div class="flex gap-1.5">
-                        <input class="w-[400px] text-[#152855]/50 p-3 border border-[#162955] rounded-[10px]" type="password" name="password" placeholder="*Password user" required>
-                        <button class="p-3 border border-[#162955] rounded-[10px] " type="button" onclick=""><img class="max-w-8" src="asset/View.png" alt=""></button>
+                        <input id="password" class="w-[400px] text-[#152855]/50 p-3 border border-[#162955] rounded-[10px]" type="password" name="password" placeholder="*Password user" required>
+                        <button class="p-3 border border-[#162955] rounded-[10px] " type="button" onclick="togglePasswordVisibility('password')"><img id="password_img" class="max-w-8" src="asset/View.png" alt=""></button>
                     </div>
                 </div>
+                <!-- Captcha -->
                 <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
             </div>
             <div class="flex flex-col gap-7">

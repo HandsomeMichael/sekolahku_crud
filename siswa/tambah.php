@@ -15,7 +15,7 @@ $akses_manajemen = $_SESSION["level"] == "operator";
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../src/output.css">
+    <link rel="stylesheet" href="src/output.css">
     <title>MySchool DB</title>
 
 </head>
@@ -37,7 +37,7 @@ $akses_manajemen = $_SESSION["level"] == "operator";
                 <p>MENU</p>
 
                 <!-- INI DI HIGHLIGHTIN -->
-                <a href="../dashboard.php">
+                <a href="">
                     <div class="selector"></div>
                     <!-- icon -->
                     <img src="" alt="">
@@ -89,11 +89,11 @@ $akses_manajemen = $_SESSION["level"] == "operator";
                     </a>
                 <?php endif; ?>
 
-                <a href="../logout.php">
+                <a href="">
                     <div class="selector"></div>
                     <!-- icon -->
                     <img src="" alt="">
-                    <p>Log Out</p>
+                    <p>Administrasi</p>
                 </a>
 
             </div>
@@ -108,76 +108,62 @@ $akses_manajemen = $_SESSION["level"] == "operator";
                 <p>Lorem ipsum dolor sit amet conesrfdsdfsfdafsadf</p>
             </div>
 
-            <div>
-                <form method="GET">
-                    <input type="text" name="search" placeholder="Cari Nama apa je">
-                    <button type="submit">🔎</button>
-                </form>
-
-                <a href="tambah.php">Tambah siswa</a>
-            </div>
-
             <!-- INI AJA YANG DI PERTAHANKAN, YG LAIN HAPUS HAPUS HAPUS BOM BOM BOOM -->
             <div>
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>NIS</th>
-                        <th>Nama</th>
-                        <th>Kelas</th>
-                        <th>Jurusan</th>
+                <form method="POST">
+                    <div>
+                        <label for="nis" class="block text-sm font-medium">NIS</label>
+                        <input id="nis" name="nis" required type="number" class="mt-1 block w-full border rounded px-3 py-2" placeholder="Masukkan NIS">
+                    </div>
 
-                        <?php if ($_SESSION["level"] !== "guest"): ?>
-                            <th>Aksi</th>
-                        <?php endif; ?>
+                    <div>
+                        <label for="nama" class="block text-sm font-medium">Nama Lengkap</label>
+                        <input id="nama" name="nama" required type="text" class="mt-1 block w-full border rounded px-3 py-2" placeholder="Masukkan nama">
+                    </div>
 
-                    </tr>
-                    
-                    <?php
-                        $no = 1;
-                        if(isset($_GET['search']) && !empty($_GET['search'])) 
-                        {
-                            $search = mysqli_real_escape_string($koneksi,$_GET['search']);
-                            $data = mysqli_query($koneksi, "SELECT * FROM siswa WHERE 
-                            
-                            nis LIKE '%$search%'
-                            OR nama LIKE '%$search%'
-                            OR kelas LIKE '%$search%'
-                            OR jurusan LIKE '%$search%'
-                            
-                            ");
-                        }
-                        else 
-                        {
-                            $data = mysqli_query($koneksi, "SELECT * FROM siswa");
-                        }
+                    <div>
 
-                        while ($d = mysqli_fetch_array($data)) {
-                    ?>
-                        <tr>
-                            <td><?= $no++; ?></td>
-                            <td><?= htmlspecialchars($d['nis']); ?></td>
-                            <td><?= htmlspecialchars($d['nama']); ?></td>
-                            <td><?= htmlspecialchars($d['kelas']); ?></td>
-                            <td><?= htmlspecialchars($d['jurusan']); ?></td>
-                            <?php if ($_SESSION["level"] !== "guest") : ?>
-                                <td>
-                                    <a href="edit.php?id=<?= $d['id']; ?>" class="btn">Edit</a>
-                                    <a href="hapus.php?id=<?= $d['id']; ?>" class="btn" style="background:red;">Hapus</a>
-                                </td>
-                            <?php endif; ?>
-                        </tr>
-                    <?php } ?>
+                        <div class="relative w-full my-3">
+                            <label class="my-2 text-primary">Kelas</label>
+                            <select name="kelas" required class="">
+                                <option value="">Pilih Kelas</option>
+                                <option value="10">X / 10</option>
+                                <option value="11">XI / 11</option>
+                                <option value="12">XII / 12</option>
+                            </select>
+                        </div>
+                        
+                        <div class="relative w-full my-3">
+                            <label class="my-2 text-primary">Jurusan</label>
+                            <select name="jurusan" required class="">
+                                <option value="">Pilih Jurusan</option>
+                                <?php
+                                $major_query = mysqli_query($koneksi, "SELECT * FROM jurusan ORDER BY nama_jurusan");
+                                while($major = mysqli_fetch_array($major_query)){
+                                ?>
+                                    <option value="<?= $major['nama_jurusan']; ?>"><?= $major['nama_jurusan']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
 
-
-                </table>
+                        <div>
+                            <a href="index.php">Cancel</a>
+                            <button type="submit" name="simpan" class="flex h-15 w-40 justify-center items-center rounded-[10px] bg-primary text-white">
+                                Daftarkan
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-
         </div>
-
     </main>
-
-
-
 </body>
 </html>
+
+<?php
+if(isset($_POST['simpan'])){
+    mysqli_query($conn, "INSERT INTO siswa (nama, nis, kelas, jurusan)
+    VALUES ('$_POST[name]','$_POST[nis]','$_POST[kelas]','$_POST[jurusan]')");
+    echo "<script>alert('Data siswa berhasil disimpan');window.location='student.php';</script>";
+}
+?>
