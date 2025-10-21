@@ -1,5 +1,10 @@
 @import "tailwindcss";
 @import url("https://fonts.cdnfonts.com/css/lato");
+@import url("https://fonts.cdnfonts.com/css/space-mono");
 body {
   font-family: "Lato", sans-serif;
+}
+
+.mono {
+  font-family: "Space Mono", sans-serif;
 }
